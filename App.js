@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+/*import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
@@ -17,4 +17,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+});*/
+
+
+import * as React from 'react';
+import Navigation from './Navigation';
+//import { NavigationContainer } from '@react-navigation/native';
+
+const App = () => {
+  return (
+    <Navigation/>
+    // Below is provided code for tutorial on navigation, just for reference, can delete once everything runs
+
+    //<NavigationContainer>
+     // {/* Rest of your app code */}
+    //</NavigationContainer>
+  );
+};
+
+export default App;
