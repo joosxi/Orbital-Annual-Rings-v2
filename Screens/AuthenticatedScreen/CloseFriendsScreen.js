@@ -109,6 +109,7 @@ const CloseFriendsScreen = () => {
                 <View style={styles.contentContainer}>
                     <Text style={styles.headerText}>Your Contacts 👋🏻</Text>
                     <View style={styles.listContainer}>
+                        
                         <FlatList
                             data={contactsList}
                             renderItem={({ item, index }) => (
@@ -123,7 +124,12 @@ const CloseFriendsScreen = () => {
                         />
                     </View>
                 </View>
-                <View style={styles.formContainer}>
+                
+                <KeyboardAvoidingView
+                style={[{ flex: 1 }, styles.formContainer]}
+                behavior={(Platform.OS === 'ios') ? 'padding' : null}
+                enabled
+                keyboardVerticalOffset={Platform.select({ ios: 5, android: 500 })}> 
                     <TextInput
                         onChangeText={setContact}
                         value={contact}
@@ -138,7 +144,7 @@ const CloseFriendsScreen = () => {
                     >
                         <Text style={styles.buttonText}>Add</Text>
                     </Pressable>
-                </View>
+                </KeyboardAvoidingView>
             </SafeAreaView>
         </KeyboardAvoidingView>
     );

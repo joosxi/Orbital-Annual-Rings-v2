@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 import AuthTextInput from '../../components/auth/AuthTextInput';
 import AuthPressable from '../../components/auth/AuthPressable';
@@ -60,9 +60,18 @@ const LoginScreen = ({ navigation }) => {
 
 
     return (
-        <ScrollView style={{backgroundColor: 'white'}}>
-            <View style={styles.container}>
-                
+        //<ScrollView style={{backgroundColor: 'white'}}>
+        <KeyboardAvoidingView
+            style={[{ flex: 1 }, styles.container]}
+            behavior={(Platform.OS === 'ios') ? 'padding' : null}
+            enabled
+            keyboardVerticalOffset={Platform.select({ ios: 100, android: 500 })}> 
+            
+            
+                <Image 
+                    resizeMode="cover"
+                    style={styles.image}
+                    source={require('../../assets/OrbitalLoginPhoto.jpeg')} />
                 <Text style={styles.textTitle}>Annual Rings</Text>
                 <Text style={styles.textBody}>Log in to your account</Text>
                 <Text style={{color: '#dc143c', fontSize: 20}}>{errorMessage}</Text>
@@ -97,8 +106,9 @@ const LoginScreen = ({ navigation }) => {
                         <Text style={[styles.textBody, {color: 'blue'}]}> Sign Up</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-        </ScrollView>
+           
+        </KeyboardAvoidingView>
+        //</ScrollView>
     );
 };
 
@@ -111,7 +121,8 @@ const styles = StyleSheet.create({
     image: {
         width: 400,
         height: 250,
-        marginVertical: 10
+        marginVertical: 10,
+
     },
     textTitle: {
         fontFamily: 'sans-serif',

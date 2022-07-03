@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity, Alert, Keyboard } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image, TouchableOpacity, Alert, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 
 import AuthTextInput from '../../components/auth/AuthTextInput';
 import AuthPressable from '../../components/auth/AuthPressable';
@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 
 import { auth } from '../../firebase/index';
+//import { KeyboardAvoidingView } from 'react-native-web';
 
 const RegisterScreen = ({ navigation }) => {
 
@@ -67,9 +68,21 @@ const RegisterScreen = ({ navigation }) => {
     };
 
     return (
-        <ScrollView style={{backgroundColor: 'white'}}>
-            <View style={styles.container}> 
+        /*<ScrollView 
+            style={{
+                backgroundColor: 'white',
                 
+                paddingVertical: 20}}>*/
+                <KeyboardAvoidingView
+                style={[{ flex: 1 }, styles.container]}
+                behavior={(Platform.OS === 'ios') ? 'padding' : null}
+                enabled
+                keyboardVerticalOffset={Platform.select({ ios: 500, android: 500 })}> 
+                
+                <Image 
+                    source={require('../../assets/OrbitalSignupPhoto.jpeg')} 
+                    resizeMode="center" 
+                    style={styles.image} />
                 <Text style={styles.textTitle}>Let's Get Started</Text>
                 <Text style={styles.textBody}>Create an account to use Annual Rings</Text>
                 <Text style={{color: '#dc143c', fontSize: 20, marginVertical: 5, marginBottom: 20}}>{errorMessage}</Text>
@@ -104,9 +117,10 @@ const RegisterScreen = ({ navigation }) => {
                     </TouchableOpacity>
 
                 </View>
-            </View>
             
-        </ScrollView>    
+            </KeyboardAvoidingView>
+            
+        //</ScrollView>    
     );
 };
 
