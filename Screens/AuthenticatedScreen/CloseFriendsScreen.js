@@ -10,6 +10,7 @@ import {
     FlatList,
     ToastAndroid,
     Keyboard,
+    ActivityIndicator
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import {
@@ -19,9 +20,11 @@ import {
     collection,
     doc,
     deleteDoc,
+    where,
+    getDoc
 } from 'firebase/firestore';
 
-import { db } from '../../firebase';
+import { auth, db } from '../../firebase';
 import InputStore from '../../components/InputStore'
 
 const INPUT_PLACEHOLDER = 'Enter your contact and hit Add';
@@ -32,11 +35,12 @@ const { width } = Dimensions.get('window');
 const CloseFriendsScreen = () => {
     const [contact, setContact] = useState('');
     const [contactsList, setContactsList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         // Expensive operation. Consider your app's design on when to invoke this.
         // Could use Redux to help on first application load.
-        const contactsQuery = query(collection(db, 'contacts'));
+        const contactsQuery = query(collection(db, 'contacts'), where('userId', '==', auth.currentUser.uid));
 
         const unsubscribe = onSnapshot(contactsQuery, (snapshot) => {
             const contacts = [];
@@ -67,6 +71,7 @@ const CloseFriendsScreen = () => {
             const contactRef = await addDoc(collection(db, 'contacts'), {
                 desc: contact,
                 completed: false,
+                userId: auth.currentUser.uid
             });
 
             console.log('onSubmitHandler success', contactRef.id);

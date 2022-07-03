@@ -14,6 +14,7 @@ const RegisterScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const signUpToast = () => {
         Alert.alert(
@@ -53,7 +54,7 @@ const RegisterScreen = ({ navigation }) => {
                 // To show the user object returned
                 console.log(user);
 
-                restoreForm();
+                //restoreForm();
                 //signUpToast();
             })
             .catch((error) => {
@@ -61,6 +62,7 @@ const RegisterScreen = ({ navigation }) => {
                 const errorMessage = error.message;
 
                 console.error('[signUpHandler]', errorCode, errorMessage);
+                setErrorMessage(errorMessage);
             });
     };
 
@@ -70,6 +72,7 @@ const RegisterScreen = ({ navigation }) => {
                 
                 <Text style={styles.textTitle}>Let's Get Started</Text>
                 <Text style={styles.textBody}>Create an account to use Annual Rings</Text>
+                <Text style={{color: '#dc143c', fontSize: 20, marginVertical: 5, marginBottom: 20}}>{errorMessage}</Text>
                 
                 <AuthTextInput
                     value={email}
@@ -94,10 +97,10 @@ const RegisterScreen = ({ navigation }) => {
                 <View style={{flexDirection: 'row'}}>
                     <Text style={styles.textBody}>Aiready have an account</Text>
                     <TouchableOpacity 
-                        style={[styles.textBody, {color: 'blue'}]} 
+                        
                         onPress={() => navigation.navigate('Main')}
                     > 
-                        <Text>Login here</Text>
+                        <Text style={[styles.textBody, {color: 'blue'}]} > Login here</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -124,7 +127,8 @@ const styles = StyleSheet.create({
     },
     textBody: {
         fontSize: 16,
-        fontFamily: 'sans-serif'
+        fontFamily: 'sans-serif',
+        marginVertical: 5
     },
     button: {
         alignItems: "center",

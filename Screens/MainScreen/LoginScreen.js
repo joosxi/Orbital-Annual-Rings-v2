@@ -15,6 +15,7 @@ const LoginScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const missingFieldsToast = () => {
         Alert.alert(
@@ -45,12 +46,14 @@ const LoginScreen = ({ navigation }) => {
                 // To show the user object returned
                 console.log(user);
 
-                restoreForm();
+                //restoreForm();
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
 
+                setErrorMessage(errorMessage);
+                
                 console.error('[loginHandler]', errorCode, errorMessage);
             });
     };
@@ -62,6 +65,7 @@ const LoginScreen = ({ navigation }) => {
                 
                 <Text style={styles.textTitle}>Annual Rings</Text>
                 <Text style={styles.textBody}>Log in to your account</Text>
+                <Text style={{color: '#dc143c', fontSize: 20}}>{errorMessage}</Text>
                 <View style={{marginTop: 20}} />
                 <AuthTextInput
                     value={email}
@@ -87,11 +91,10 @@ const LoginScreen = ({ navigation }) => {
 
                 <View style={{flexDirection: 'row', marginVertical: 5}}>
                     <Text style={styles.textBody}>Don't Have an account</Text>
-                    <TouchableOpacity 
-                        style={[styles.textBody, {color: 'blue'}]} 
+                    <TouchableOpacity  
                         onPress={() => navigation.navigate('Register')}
                     > 
-                        <Text>Sign Up</Text>
+                        <Text style={[styles.textBody, {color: 'blue'}]}> Sign Up</Text>
                     </TouchableOpacity>
                 </View>
             </View>
